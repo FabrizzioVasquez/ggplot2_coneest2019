@@ -1,0 +1,48 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+# cargar librerias y bases de datos
+library(flexdashboard)
+library(ggplot2)
+piramide=readRDS("piramide.Rds")
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+ggplot(diamonds,aes(x=carat,y=depth))+
+  geom_point()
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+ggplot(piramide,aes(x=edad,y=poblacion,fill=sexo))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  labs(y="Población",x="Edad",title="Piramide Edades",fill="Sexo")+
+  theme(legend.position = "top") + #bottom para abajo
+  scale_y_continuous(labels=c(2000,1000,0,1000,2000))+
+  scale_fill_discrete(labels=c("Mujeres","Varones"))
+```
+
+### Chart C
+
+```{r}
+ggplot(mtcars,aes(x=mpg))+
+  geom_histogram(binwidth=10)
+```
+
